@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { Menu, X, Moon, Sun } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -33,13 +33,6 @@ export default function Header() {
             <a href="#features" className="text-secondary-600 dark:text-secondary-200 hover:text-primary-600 transition-colors font-medium">Features</a>
             <a href="#how-it-works" className="text-secondary-600 dark:text-secondary-200 hover:text-primary-600 transition-colors font-medium">How it Works</a>
             <a href="#contact" className="btn-primary">Get Early Access</a>
-            <button
-              className="ml-4 p-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
-              onClick={() => setDark(d => !d)}
-              aria-label="Toggle dark mode"
-            >
-              {dark ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-secondary-700" />}
-            </button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -58,13 +51,6 @@ export default function Header() {
               <a href="#features" className="text-secondary-600 dark:text-secondary-200 hover:text-primary-600 transition-colors font-medium">Features</a>
               <a href="#how-it-works" className="text-secondary-600 dark:text-secondary-200 hover:text-primary-600 transition-colors font-medium">How it Works</a>
               <a href="#contact" className="btn-primary text-center">Get Early Access</a>
-              <button
-                className="mt-4 p-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors w-fit mx-auto"
-                onClick={() => setDark(d => !d)}
-                aria-label="Toggle dark mode"
-              >
-                {dark ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-secondary-700" />}
-              </button>
             </nav>
           </div>
         )}
