@@ -19,4 +19,12 @@ const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
 
 // Initialize Analytics (only in browser)
-export const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null 
+export const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null
+
+// Debug: Log Firebase initialization
+if (typeof window !== 'undefined') {
+  console.log('Firebase initialized with config:', {
+    projectId: firebaseConfig.projectId,
+    authDomain: firebaseConfig.authDomain
+  })
+} 

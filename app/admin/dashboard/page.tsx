@@ -16,6 +16,7 @@ export default function AdminDashboard() {
   const [waitlistData, setWaitlistData] = useState<WaitlistEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [retryCount, setRetryCount] = useState(0)
   const router = useRouter()
 
   useEffect(() => {
@@ -26,11 +27,23 @@ export default function AdminDashboard() {
       return
     }
 
-    fetchWaitlistData()
+    // Add a small delay to ensure Firebase is properly initialized
+    const timer = setTimeout(() => {
+      fetchWaitlistData()
+    }, 100)
+
+    return () => clearTimeout(timer)
   }, [router])
 
   const fetchWaitlistData = async () => {
     try {
+      // Ensure we're on the client side
+      if (typeof window === 'undefined') {
+        setError('Cannot fetch data on server side')
+        setLoading(false)
+        return
+      }
+
       const waitlistRef = collection(db, 'waitlist')
       const q = query(waitlistRef, orderBy('timestamp', 'desc'))
       const querySnapshot = await getDocs(q)
@@ -47,8 +60,8 @@ export default function AdminDashboard() {
       
       setWaitlistData(data)
     } catch (err) {
-      setError('Failed to fetch waitlist data')
       console.error('Error fetching waitlist:', err)
+      setError('Failed to fetch waitlist data. Please check your connection and try again.')
     } finally {
       setLoading(false)
     }
@@ -57,6 +70,13 @@ export default function AdminDashboard() {
   const handleLogout = () => {
     sessionStorage.removeItem('adminAuthenticated')
     router.push('/admin/login')
+  }
+
+  const handleRetry = () => {
+    setError('')
+    setRetryCount(prev => prev + 1)
+    setLoading(true)
+    fetchWaitlistData()
   }
 
   const formatDate = (timestamp: any) => {
@@ -171,7 +191,13 @@ export default function AdminDashboard() {
             
             {error && (
               <div className="px-4 py-3 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400">
-                <div className="text-sm text-red-700 dark:text-red-400">{error}</div>
+                <div className="text-sm text-red-700 dark:text-red-400 mb-2">{error}</div>
+                <button
+                  onClick={handleRetry}
+                  className="text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                >
+                  Retry
+                </button>
               </div>
             )}
 
