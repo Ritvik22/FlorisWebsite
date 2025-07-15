@@ -3,7 +3,6 @@ import Hero from '@/components/Hero'
 import WhatIsFloris from '@/components/WhatIsFloris'
 import Features from '@/components/Features'
 import HowItWorks from '@/components/HowItWorks'
-import Comparison from '@/components/Comparison'
 import MarketOpportunity from '@/components/MarketOpportunity'
 import Testimonials from '@/components/Testimonials'
 import FAQ from '@/components/FAQ'
@@ -18,7 +17,6 @@ export default function Home() {
       <WhatIsFloris />
       <Features />
       <HowItWorks />
-      <Comparison />
       <MarketOpportunity />
       <Testimonials />
       <FAQ />

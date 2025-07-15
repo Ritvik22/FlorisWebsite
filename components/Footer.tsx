@@ -1,4 +1,7 @@
+'use client'
+
 import { Twitter, Linkedin, Github, Mail } from 'lucide-react'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
@@ -8,9 +11,13 @@ export default function Footer() {
           {/* Company Info */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">F</span>
-              </div>
+              <Image 
+                src="/logo.png" 
+                alt="Floris Logo" 
+                width={32} 
+                height={32} 
+                className="rounded-lg"
+              />
               <span className="font-display font-bold text-xl">Floris</span>
             </div>
             <p className="text-secondary-300 mb-6 max-w-md">
@@ -18,12 +25,17 @@ export default function Footer() {
               AI-driven crop monitoring system for gardeners and farmers.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-secondary-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-secondary-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors">
+              <button 
+                onClick={() => {
+                  const tab1 = window.open('https://www.linkedin.com/in/ritvik-shah-329811293/', '_blank');
+                  setTimeout(() => {
+                    window.open('https://www.linkedin.com/in/rishi-yedavalli-a3a7512a8/', '_blank');
+                  }, 100);
+                }}
+                className="w-10 h-10 bg-secondary-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors"
+              >
                 <Linkedin className="w-5 h-5" />
-              </a>
+              </button>
               <a href="#" className="w-10 h-10 bg-secondary-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors">
                 <Github className="w-5 h-5" />
               </a>
@@ -39,8 +51,6 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><a href="#features" className="text-secondary-300 hover:text-white transition-colors">Features</a></li>
               <li><a href="#how-it-works" className="text-secondary-300 hover:text-white transition-colors">How it Works</a></li>
-              <li><a href="#comparison" className="text-secondary-300 hover:text-white transition-colors">Comparison</a></li>
-              <li><a href="#web3" className="text-secondary-300 hover:text-white transition-colors">Web3 Ready</a></li>
             </ul>
           </div>
 
@@ -50,8 +60,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><a href="#contact" className="text-secondary-300 hover:text-white transition-colors">Contact</a></li>
               <li><a href="#" className="text-secondary-300 hover:text-white transition-colors">About</a></li>
-              <li><a href="#" className="text-secondary-300 hover:text-white transition-colors">Careers</a></li>
-              <li><a href="#" className="text-secondary-300 hover:text-white transition-colors">Privacy Policy</a></li>
+
             </ul>
           </div>
         </div>

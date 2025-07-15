@@ -1,16 +1,84 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, Send } from 'lucide-react'
+import { Mail, Send, CheckCircle, AlertCircle, Users } from 'lucide-react'
 
 export default function Contact() {
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [submitMessage, setSubmitMessage] = useState('')
+  
+  // Waitlist states
+  const [waitlistEmail, setWaitlistEmail] = useState('')
+  const [isWaitlistSubmitting, setIsWaitlistSubmitting] = useState(false)
+  const [waitlistStatus, setWaitlistStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [waitlistMessage, setWaitlistMessage] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log('Form submitted:', { email, message })
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, message }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        setSubmitMessage('Message sent successfully! We\'ll get back to you soon.')
+        setEmail('')
+        setMessage('')
+      } else {
+        setSubmitStatus('error')
+        setSubmitMessage(data.error || 'Failed to send message. Please try again.')
+      }
+    } catch (error) {
+      setSubmitStatus('error')
+      setSubmitMessage('Failed to send message. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsWaitlistSubmitting(true)
+    setWaitlistStatus('idle')
+
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: waitlistEmail }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setWaitlistStatus('success')
+        setWaitlistMessage('Successfully joined the waitlist! We\'ll notify you when Floris is ready.')
+        setWaitlistEmail('')
+      } else {
+        setWaitlistStatus('error')
+        setWaitlistMessage(data.error || 'Failed to join waitlist. Please try again.')
+      }
+    } catch (error) {
+      setWaitlistStatus('error')
+      setWaitlistMessage('Failed to join waitlist. Please try again.')
+    } finally {
+      setIsWaitlistSubmitting(false)
+    }
   }
 
   return (
@@ -59,34 +127,91 @@ export default function Contact() {
                   required
                 />
               </div>
-              <button type="submit" className="btn-primary w-full flex items-center justify-center space-x-2">
-                <Send className="w-5 h-5" />
-                <span>Send Message</span>
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="btn-primary w-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    <span>Send Message</span>
+                  </>
+                )}
               </button>
+
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div className="flex items-center space-x-2 text-green-600 bg-green-50 p-3 rounded-lg">
+                  <CheckCircle className="w-5 h-5" />
+                  <span>{submitMessage}</span>
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg">
+                  <AlertCircle className="w-5 h-5" />
+                  <span>{submitMessage}</span>
+                </div>
+              )}
             </form>
           </div>
 
-          {/* Newsletter Signup */}
+          {/* Waitlist Signup */}
           <div className="glass-effect rounded-xl p-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="w-8 h-8 text-primary-600" />
+                <Users className="w-8 h-8 text-primary-600" />
               </div>
-              <h3 className="font-semibold text-2xl mb-4">Stay Updated</h3>
+              <h3 className="font-semibold text-2xl mb-4">Join the Waitlist</h3>
               <p className="text-secondary-600 mb-6 leading-relaxed">
-                Get the latest updates on Floris development, early access opportunities, 
-                and exclusive insights into the future of smart agriculture.
+                Be among the first to get early access to Floris. Join our exclusive waitlist 
+                and get notified when we launch our AI-powered crop protection system.
               </p>
-              <div className="space-y-4">
+              <form onSubmit={handleWaitlistSubmit} className="space-y-4">
                 <input
                   type="email"
+                  value={waitlistEmail}
+                  onChange={(e) => setWaitlistEmail(e.target.value)}
                   placeholder="Enter your email"
                   className="w-full px-4 py-3 border border-secondary-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                  required
                 />
-                <button className="btn-primary w-full">
-                  Subscribe to Updates
+                <button 
+                  type="submit"
+                  disabled={isWaitlistSubmitting}
+                  className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isWaitlistSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Joining...</span>
+                    </>
+                  ) : (
+                    <span>Join Waitlist</span>
+                  )}
                 </button>
-              </div>
+              </form>
+
+              {/* Waitlist Status Messages */}
+              {waitlistStatus === 'success' && (
+                <div className="flex items-center space-x-2 text-green-600 bg-green-50 p-3 rounded-lg mt-4">
+                  <CheckCircle className="w-5 h-5" />
+                  <span>{waitlistMessage}</span>
+                </div>
+              )}
+              
+              {waitlistStatus === 'error' && (
+                <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg mt-4">
+                  <AlertCircle className="w-5 h-5" />
+                  <span>{waitlistMessage}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

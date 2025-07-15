@@ -32,7 +32,6 @@ export default function Header() {
           <nav className="hidden md:flex items-center space-x-8">
             <a href="#features" className="text-secondary-600 dark:text-secondary-200 hover:text-primary-600 transition-colors font-medium">Features</a>
             <a href="#how-it-works" className="text-secondary-600 dark:text-secondary-200 hover:text-primary-600 transition-colors font-medium">How it Works</a>
-            <a href="#comparison" className="text-secondary-600 dark:text-secondary-200 hover:text-primary-600 transition-colors font-medium">Comparison</a>
             <a href="#contact" className="btn-primary">Get Early Access</a>
             <button
               className="ml-4 p-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
@@ -58,7 +57,6 @@ export default function Header() {
             <nav className="flex flex-col space-y-4">
               <a href="#features" className="text-secondary-600 dark:text-secondary-200 hover:text-primary-600 transition-colors font-medium">Features</a>
               <a href="#how-it-works" className="text-secondary-600 dark:text-secondary-200 hover:text-primary-600 transition-colors font-medium">How it Works</a>
-              <a href="#comparison" className="text-secondary-600 dark:text-secondary-200 hover:text-primary-600 transition-colors font-medium">Comparison</a>
               <a href="#contact" className="btn-primary text-center">Get Early Access</a>
               <button
                 className="mt-4 p-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors w-fit mx-auto"

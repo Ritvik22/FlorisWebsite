@@ -78,7 +78,7 @@ export default function Hero() {
               className="flex items-center space-x-8 pt-8 border-t border-secondary-200"
             >
               <div>
-                <div className="text-2xl font-bold text-secondary-900">99%</div>
+                <div className="text-2xl font-bold text-secondary-900">90+%</div>
                 <div className="text-sm text-secondary-600">Accuracy Rate</div>
               </div>
               <div>

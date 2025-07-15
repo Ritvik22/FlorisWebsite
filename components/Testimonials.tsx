@@ -2,9 +2,9 @@ import { Star } from 'lucide-react'
 
 const testimonials = [
   {
-    name: "Divya Naranyanan",
-    role: "Commercial Farmer",
-    content: "Floris has transformed our crop monitoring. The AI detects issues days before we can see them visually, and the offline capability is crucial for our remote fields. We've reduced crop losses by 40%.",
+    name: "Vidhya Narayanan",
+    role: "Local Gardener",
+    content: "Floris has transformed my crop monitoring. The AI detects issues days before I can see them visually. I'm able to take action before it's too late.",
     rating: 5
   },
   {
@@ -15,7 +15,7 @@ const testimonials = [
   },
   {
     name: "Prachi Gupta",
-    role: "Agricultural Researcher",
+    role: "Community Gardener",
     content: "As a researcher, I appreciate the scientific accuracy of Floris. The hybrid AI combining visual and sensor data provides insights we couldn't get before. The data privacy features are exactly what we needed.",
     rating: 5
   }
@@ -30,7 +30,7 @@ export default function Testimonials() {
             What Our Users Say
           </h2>
           <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
-            Join thousands of growers who trust Floris for their crop protection needs.
+            Join a community of growers who trust Floris for their crop protection needs.
           </p>
         </div>
 
