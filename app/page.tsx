@@ -6,6 +6,7 @@ import HowItWorks from '@/components/HowItWorks'
 import MarketOpportunity from '@/components/MarketOpportunity'
 import Testimonials from '@/components/Testimonials'
 import FAQ from '@/components/FAQ'
+import Team from '@/components/Team'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import AdminSymbol from '@/components/AdminSymbol'
@@ -21,6 +22,7 @@ export default function Home() {
       <MarketOpportunity />
       <Testimonials />
       <FAQ />
+      <Team />
       <Contact />
       <Footer />
       <AdminSymbol />
